@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+</head>
+<body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px;">
+
+    <!-- 标题 -->
+    <div style="font-size: 24px; font-weight: bold; color: #1a1a1a; text-align: center; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 2px solid #f0f0f0;">
+        {{ title }}
+    </div>
+    
+    <!-- 前言 -->
+    {% if sections.preface %}
+    <div style="margin-bottom: 40px;">
+        <div style="margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px; margin-inline-end: 0px; font-family: mp-quote, PingFang SC, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif; font-size: 19.2px; line-height: 2.4; padding-left: 12px; margin: 32px 8px 12px 0; font-weight: bold; border-left: 4px solid #0366d6; border-radius: 6px; border-right: 1px solid rgba(59, 130, 246, 0.1); border-bottom: 1px solid rgba(59, 130, 246, 0.1); border-top: 1px solid rgba(59, 130, 246, 0.1); background: rgba(59, 130, 246, 0.08);">
+            前言
+        </div>
+        <div style="font-size: 16px; line-height: 1.8; color: #444;">
+            {{ sections.preface | safe }}
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- 项目介绍 -->
+    {% if sections.introduction %}
+    <div style="margin-bottom: 40px;">
+        <div style="margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px; margin-inline-end: 0px; font-family: mp-quote, PingFang SC, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif; font-size: 19.2px; line-height: 2.4; padding-left: 12px; margin: 32px 8px 12px 0; font-weight: bold; border-left: 4px solid #0366d6; border-radius: 6px; border-right: 1px solid rgba(59, 130, 246, 0.1); border-bottom: 1px solid rgba(59, 130, 246, 0.1); border-top: 1px solid rgba(59, 130, 246, 0.1); background: rgba(59, 130, 246, 0.08);">
+            项目介绍
+        </div>
+        <div style="font-size: 16px; line-height: 1.8; color: #444;">
+            {{ sections.introduction | safe }}
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- 功能亮点 -->
+    {% if sections.features %}
+    <div style="margin-bottom: 40px;">
+        <div style="margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px; margin-inline-end: 0px; font-family: mp-quote, PingFang SC, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif; font-size: 19.2px; line-height: 2.4; padding-left: 12px; margin: 32px 8px 12px 0; font-weight: bold; border-left: 4px solid #0366d6; border-radius: 6px; border-right: 1px solid rgba(59, 130, 246, 0.1); border-bottom: 1px solid rgba(59, 130, 246, 0.1); border-top: 1px solid rgba(59, 130, 246, 0.1); background: rgba(59, 130, 246, 0.08);">
+            功能亮点
+        </div>
+        <div style="font-size: 16px; line-height: 1.8; color: #444;">
+            {{ sections.features | safe }}
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- 技术特点 -->
+    {% if sections.technical %}
+    <div style="margin-bottom: 40px;">
+        <div style="margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px; margin-inline-end: 0px; font-family: mp-quote, PingFang SC, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif; font-size: 19.2px; line-height: 2.4; padding-left: 12px; margin: 32px 8px 12px 0; font-weight: bold; border-left: 4px solid #0366d6; border-radius: 6px; border-right: 1px solid rgba(59, 130, 246, 0.1); border-bottom: 1px solid rgba(59, 130, 246, 0.1); border-top: 1px solid rgba(59, 130, 246, 0.1); background: rgba(59, 130, 246, 0.08);">
+            技术特点
+        </div>
+        <div style="font-size: 16px; line-height: 1.8; color: #444;">
+            {{ sections.technical | safe }}
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- 安装说明 -->
+    {% if sections.installation %}
+    <div style="margin-bottom: 40px;">
+        <div style="margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px; margin-inline-end: 0px; font-family: mp-quote, PingFang SC, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif; font-size: 19.2px; line-height: 2.4; padding-left: 12px; margin: 32px 8px 12px 0; font-weight: bold; border-left: 4px solid #0366d6; border-radius: 6px; border-right: 1px solid rgba(59, 130, 246, 0.1); border-bottom: 1px solid rgba(59, 130, 246, 0.1); border-top: 1px solid rgba(59, 130, 246, 0.1); background: rgba(59, 130, 246, 0.08);">
+            安装说明
+        </div>
+        <div style="font-size: 16px; line-height: 1.8; color: #444;">
+            <div style="background-color: #f8f9fa; border-radius: 6px; padding: 16px; margin: 16px 0; overflow-x: auto;">
+                <pre style="margin: 0; font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 14px; line-height: 1.4;">{{ sections.installation | safe }}</pre>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- 使用说明 -->
+    {% if sections.usage %}
+    <div style="margin-bottom: 40px;">
+        <div style="margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px; margin-inline-end: 0px; font-family: mp-quote, PingFang SC, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif; font-size: 19.2px; line-height: 2.4; padding-left: 12px; margin: 32px 8px 12px 0; font-weight: bold; border-left: 4px solid #0366d6; border-radius: 6px; border-right: 1px solid rgba(59, 130, 246, 0.1); border-bottom: 1px solid rgba(59, 130, 246, 0.1); border-top: 1px solid rgba(59, 130, 246, 0.1); background: rgba(59, 130, 246, 0.08);">
+            使用说明
+        </div>
+        <div style="font-size: 16px; line-height: 1.8; color: #444;">
+            {{ sections.usage | safe }}
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- 项目地址 -->
+    {% if sections.repository %}
+    <div style="margin-bottom: 40px;">
+        <div style="margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px; margin-inline-end: 0px; font-family: mp-quote, PingFang SC, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif; font-size: 19.2px; line-height: 2.4; padding-left: 12px; margin: 32px 8px 12px 0; font-weight: bold; border-left: 4px solid #0366d6; border-radius: 6px; border-right: 1px solid rgba(59, 130, 246, 0.1); border-bottom: 1px solid rgba(59, 130, 246, 0.1); border-top: 1px solid rgba(59, 130, 246, 0.1); background: rgba(59, 130, 246, 0.08);">
+            项目地址
+        </div>
+        <div style="font-size: 16px; line-height: 1.8; color: #444;">
+            <a href="{{ sections.repository }}" style="color: #0366d6; text-decoration: none;">{{ sections.repository }}</a>
+        </div>
+    </div>
+    {% endif %}
+    
+    <!-- 结语 -->
+    {% if sections.conclusion %}
+    <div style="margin-top: 40px; padding: 20px; background-color: #f8f9fa; border-left: 4px solid #0366d6; border-radius: 0 6px 6px 0;">
+        <div style="margin-block-start: 1em; margin-block-end: 1em; margin-inline-start: 0px; margin-inline-end: 0px; font-family: mp-quote, PingFang SC, system-ui, -apple-system, BlinkMacSystemFont, Helvetica Neue, Hiragino Sans GB, Microsoft YaHei UI, Microsoft YaHei, Arial, sans-serif; font-size: 19.2px; line-height: 2.4; padding-left: 12px; margin: 32px 8px 12px 0; font-weight: bold; border-left: 4px solid #0366d6; border-radius: 6px; border-right: 1px solid rgba(59, 130, 246, 0.1); border-bottom: 1px solid rgba(59, 130, 246, 0.1); border-top: 1px solid rgba(59, 130, 246, 0.1); background: rgba(59, 130, 246, 0.08);">
+            结语
+        </div>
+        <div style="font-size: 16px; line-height: 1.8; color: #444;">
+            {{ sections.conclusion | safe }}
+        </div>
+    </div>
+    {% endif %}
+</body>
+</html>

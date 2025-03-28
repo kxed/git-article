@@ -244,80 +244,164 @@ def analyze_with_openai(content):
 
 def generate_html(analysis_result):
     """生成微信公众号文章HTML"""
-    # 确保输入内容编码正确
     try:
         if isinstance(analysis_result, bytes):
             analysis_result = analysis_result.decode('utf-8')
-        while '\\u' in analysis_result:
-            analysis_result = analysis_result.encode().decode('unicode-escape')
-    except Exception as e:
-        print(f"HTML生成时编码处理失败: {str(e)}")
         
-    # 设置Jinja2环境
-    env = Environment(loader=FileSystemLoader('templates'))
+        # 加载模板
+        env = Environment(loader=FileSystemLoader('templates'))
+        template_name = os.getenv('TEMPLATE_NAME', 'article')
+        template = env.get_template(f'{template_name}.html')
+        
+        # 初始化sections字典
+        sections = {
+            'preface': '',
+            'introduction': '',
+            'features': '',
+            'technical': '',
+            'installation': '',
+            'usage': '',
+            'repository': '',
+            'conclusion': ''
+        }
+        
+        title = ''
+        current_section = None
+        current_content = []
+        
+        # 解析文章内容
+        for line in analysis_result.split('\n'):
+            if line.startswith('# '):
+                # 主标题
+                title = line.replace('# ', '').strip()
+            elif line.startswith('## '):
+                # 如果有之前的section，保存它
+                if current_section and current_content:
+                    section_content = '\n'.join(current_content)
+                    if current_section == '前言':
+                        sections['preface'] = process_section_content(section_content)
+                    elif current_section == '项目介绍':
+                        sections['introduction'] = process_section_content(section_content)
+                    elif current_section == '功能亮点':
+                        sections['features'] = process_section_content(section_content)
+                    elif current_section == '技术特点':
+                        sections['technical'] = process_section_content(section_content)
+                    elif current_section == '安装说明':
+                        sections['installation'] = process_section_content(section_content)
+                    elif current_section == '使用说明':
+                        sections['usage'] = process_section_content(section_content)
+                    elif current_section == '项目地址':
+                        sections['repository'] = process_section_content(section_content)
+                    elif current_section == '结语':
+                        sections['conclusion'] = process_section_content(section_content)
+                
+                # 新的section
+                current_section = line.replace('## ', '').strip()
+                current_content = []
+            elif current_section:
+                current_content.append(line)
+        
+        # 处理最后一个section
+        if current_section and current_content:
+            section_content = '\n'.join(current_content)
+            if current_section == '结语':
+                sections['conclusion'] = process_section_content(section_content)
+            # ... 其他section的处理 ...
+        
+        # 渲染模板
+        html_content = template.render(
+            title=title,
+            sections=sections
+        )
+        
+        return html_content
+        
+    except Exception as e:
+        print(f"生成HTML时发生错误: {str(e)}")
+        traceback.print_exc()
+        return f"<h1>生成HTML时发生错误</h1><pre>{str(e)}</pre>"
+
+def process_section_content(content):
+    """处理章节内容，包括代码块、图片等"""
+    if not content:
+        return ''
+        
+    # 处理代码块
+    content = process_code_blocks(content)
     
-    # 获取模板名称
-    template_name = os.getenv('TEMPLATE_NAME', 'default')
-    template = env.get_template(f'{template_name}.html')
+    # 处理图片
+    content = process_images(content)
     
-    # 解析分析结果
-    lines = analysis_result.split('\n')
-    html_content = ""
-    title = "项目分析报告"  # 默认标题
-    current_section = None
-    current_content = []
-    in_code_block = False
-    code_lang = ""
+    # 处理列表
+    content = process_lists(content)
     
-    # 先提取标题（通常是第一行）
-    if lines and lines[0].startswith('# '):
-        title = lines[0].replace('# ', '').strip()
-        lines = lines[1:]  # 移除标题行
+    # 处理链接
+    content = process_links(content)
     
-    # 处理每一行
+    # 处理加粗和斜体
+    content = process_emphasis(content)
+    
+    return content
+
+def process_code_blocks(content):
+    """处理代码块"""
+    parts = []
+    lines = content.split('\n')
+    in_code = False
+    code_buffer = []
+    
     for line in lines:
-        # 检查是否是代码块开始或结束
         if line.strip().startswith('```'):
-            in_code_block = not in_code_block
-            if in_code_block and len(line.strip()) > 3:
-                code_lang = line.strip()[3:]
-            else:
-                code_lang = ""
-            current_content.append(line)
+            if in_code:
+                # 结束代码块
+                code = '\n'.join(code_buffer)
+                if code.strip():
+                    parts.append(f'<div class="code-block"><pre>{code}</pre></div>')
+                code_buffer = []
+            in_code = not in_code
             continue
             
-        # 如果在代码块内，直接添加行
-        if in_code_block:
-            current_content.append(line)
-            continue
-            
-        # 检查是否是新的章节标题
-        if (line.startswith('## ') or 
-            line.startswith('### ') or 
-            line.startswith('#### ')):
-            
-            # 处理上一节的内容
-            if current_section and current_content:
-                section_html = process_section(current_section, '\n'.join(current_content))
-                html_content += section_html
-            
-            # 设置新的章节标题
-            current_section = line.lstrip('#').strip()
-            current_content = []
+        if in_code:
+            code_buffer.append(line)
         else:
-            # 普通内容行
-            current_content.append(line)
+            parts.append(line)
     
-    # 处理最后一节内容
-    if current_section and current_content:
-        section_html = process_section(current_section, '\n'.join(current_content))
-        html_content += section_html
-    
-    # 添加当前时间和作者
-    now = datetime.now().strftime("%Y-%m-%d %H:%M")
-    author = os.getenv('AUTHOR_NAME', 'AI助手')
-    
-    return template.render(content=html_content, now=now, title=title, author=author)
+    return '\n'.join(parts)
+
+def process_images(content):
+    """处理图片"""
+    return re.sub(
+        r'!\[(.*?)\]\((.*?)\)',
+        r'<div class="image-container"><img src="\2" alt="\1"><div class="image-caption">\1</div></div>',
+        content
+    )
+
+def process_lists(content):
+    """处理列表"""
+    if any(line.strip().startswith('- ') for line in content.split('\n')):
+        lines = content.split('\n')
+        list_content = ['<ul>']
+        for line in lines:
+            if line.strip().startswith('- '):
+                item = line.strip()[2:]
+                list_content.append(f'<li>{item}</li>')
+        list_content.append('</ul>')
+        return '\n'.join(list_content)
+    return content
+
+def process_links(content):
+    """处理链接"""
+    return re.sub(
+        r'\[(.*?)\]\((.*?)\)',
+        r'<a href="\2" target="_blank">\1</a>',
+        content
+    )
+
+def process_emphasis(content):
+    """处理加粗和斜体"""
+    content = re.sub(r'\*\*(.*?)\*\*', r'<strong>\1</strong>', content)
+    content = re.sub(r'\*(.*?)\*', r'<em>\1</em>', content)
+    return content
 
 def process_section(section_title, content):
     """处理单个章节内容"""
@@ -528,168 +612,192 @@ def get_random_lora_name():
     ]
     return random.choice(lora_names)
 
-def main():
-    # 命令行参数解析
-    parser = argparse.ArgumentParser(description='GitHub项目README分析和发布工具')
-    parser.add_argument('--url', type=str, help='要分析的GitHub项目URL，覆盖环境变量中的配置')
-    parser.add_argument('--no-publish', action='store_true', help='不发布到微信公众号')
-    parser.add_argument('--test', action='store_true', help='微信发布测试模式')
-    parser.add_argument('--debug', action='store_true', help='显示调试信息')
-    args = parser.parse_args()
-    
+def generate_poster(article_content):
+    """生成文章封面图片"""
+    poster_url = None
     try:
-        # 获取项目地址列表
-        project_urls = []
-        if args.url:
-            project_urls = [args.url]
-        else:
-            urls_env = os.getenv('PROJECT_URLS', '')
-            project_urls = [url.strip() for url in urls_env.split(',') if url.strip()]
+        poster_gen = PosterGenerator()
+        # 从环境变量获取配置，如果没有则使用默认值
+        wh_ratios = os.getenv('POSTER_WH_RATIOS', '竖版').split(',')
+        lora_name = os.getenv('POSTER_LORA_NAME', '')
         
-        if not project_urls:
-            raise ValueError("未配置项目地址。请在.env文件中设置PROJECT_URLS或使用--url参数")
+        # 如果 lora_name 为空，随机选择一个
+        if not lora_name:
+            lora_name = get_random_lora_name()
+            print(f"随机选择的 lora_name: {lora_name}")
         
-        # 获取所有README内容
-        all_content = []
-        all_images = []
-        for url in project_urls:
+        # 构建提示词
+        prompt_text_zh = f"{article_content['title']} - {article_content['sub_title']}"
+        
+        # 为每个比例生成海报
+        for ratio in wh_ratios:
             try:
-                content, img_links = fetch_readme_content(url)
-                all_content.append(content)
-                all_images.extend(img_links)
-                print(f"成功获取 {url} 的README内容")
+                result = poster_gen.generate(
+                    prompt_text_zh=prompt_text_zh,
+                    title=article_content['title'],
+                    sub_title=article_content['sub_title'],
+                    body_text=article_content['body_text'],
+                    wh_ratio=ratio,
+                    lora_name=lora_name
+                )
+                print(f"成功生成比例为 {ratio} 的海报")
+                # 保存第一个成功生成的海报URL
+                if result and not poster_url:
+                    poster_url = result.get('url')
+                print(f"海报URL: {poster_url}")
             except Exception as e:
-                print(f"获取 {url} 的README内容失败: {str(e)}")
-        
-        if not all_content:
-            raise ValueError("未能获取任何README内容")
-        
-        # 合并所有内容
-        combined_content = "\n\n---\n\n".join(all_content)
-        
-        # 使用OpenAI分析内容
-        analysis_result = analyze_with_openai(combined_content)
-        
-        # 提取文章内容
-        article_content = extract_article_content(analysis_result)
-        
-        # 生成HTML
-        html_content = generate_html(analysis_result)
-        
-        # 保存HTML文件
-        output_file = 'output.html'
-        with open(output_file, 'w', encoding='utf-8') as f:
-            f.write(html_content)
-            
-        print(f"分析完成！结果已保存到 {output_file}")
-        
-        # 生成海报
-        poster_url = None
-        try:
-            poster_gen = PosterGenerator()
-            # 从环境变量获取配置，如果没有则使用默认值
-            wh_ratios = os.getenv('POSTER_WH_RATIOS', '竖版').split(',')
-            lora_name = os.getenv('POSTER_LORA_NAME', '')
-            
-            # 如果 lora_name 为空，随机选择一个
-            if not lora_name:
-                lora_name = get_random_lora_name()
-                print(f"随机选择的 lora_name: {lora_name}")
-            
-            # 构建提示词
-            prompt_text_zh = f"{article_content['title']} - {article_content['sub_title']}"
-            
-            # 为每个比例生成海报
-            for ratio in wh_ratios:
-                try:
-                    result = poster_gen.generate(
-                        prompt_text_zh=prompt_text_zh,
-                        title=article_content['title'],
-                        sub_title=article_content['sub_title'],
-                        body_text=article_content['body_text'],
-                        wh_ratio=ratio,
-                        lora_name=lora_name
-                    )
-                    print(f"成功生成比例为 {ratio} 的海报")
-                    # 保存第一个成功生成的海报URL
-                    if result and not poster_url:
-                        poster_url = result.get('url')
-                except Exception as e:
-                    print(f"生成比例为 {ratio} 的海报失败: {str(e)}")
-        except Exception as e:
-            print(f"海报生成过程中发生错误: {str(e)}")
-            if args.debug:
-                traceback.print_exc()
-        
-        # 检查是否需要发布到微信公众号
-        should_publish_to_weixin = (
-            not args.no_publish and 
-            os.getenv('PUBLISH_TO_WEIXIN', 'false').lower() == 'true'
-        )
-        
-        if should_publish_to_weixin:
-            print("\n=====================")
-            print("开始调用微信发布模块...")
-            
-            # 直接调用publish_to_weixin模块
-            try:
-                # 创建WeixinPublisher实例
-                weixin_publisher = WeixinPublisher()
-                
-                # 如果有海报，先上传海报
-                thumb_media_id = None
-                if poster_url:
-                    try:
-                        print("正在上传海报到微信...")
-                        thumb_media_id = weixin_publisher.upload_image(poster_url)
-                        print(f"海报上传成功，media_id: {thumb_media_id}")
-                    except Exception as e:
-                        print(f"上传海报失败: {str(e)}")
-                        if args.debug:
-                            traceback.print_exc()
-                
-                # 准备参数
-                publish_args = {
-                    'html': output_file,
-                    'title': article_content['title'],
-                    'author': os.getenv('AUTHOR_NAME', 'AI助手'),
-                    'test': args.test,
-                    'debug': args.debug
-                }
-                
-                # 如果有封面图的media_id，添加到参数中
-                if thumb_media_id:
-                    publish_args['thumb_media_id'] = thumb_media_id
-                
-                print(f"调用微信发布模块，参数: {publish_args}")
-                
-                # 调用publish_to_weixin模块中的publish函数
-                result = publish_to_weixin.publish(**publish_args)
-                
-                if result:
-                    print("创建草稿成功！")
-                else:
-                    print("创建草稿失败！")
-                    
-            except Exception as e:
-                print(f"调用微信发布模块失败: {str(e)}")
-                if args.debug:
-                    traceback.print_exc()
-        
+                print(f"生成比例为 {ratio} 的海报失败: {str(e)}")
     except Exception as e:
-        print(f"发生错误: {str(e)}")
+        print(f"海报生成过程中发生错误: {str(e)}")
         if args.debug:
             traceback.print_exc()
-        return 1
-        
-    return 0
+    return poster_url
 
-if __name__ == "__main__":
-    import traceback
-    
+def main():
     try:
-        sys.exit(main())
+        # 命令行参数解析
+        parser = argparse.ArgumentParser(description='GitHub项目README分析和发布工具')
+        parser.add_argument('--url', type=str, help='要分析的GitHub项目URL，覆盖环境变量中的配置')
+        parser.add_argument('--debug', action='store_true', help='显示调试信息')
+        parser.add_argument('--publish', action='store_true', help='强制发布到微信，覆盖环境变量配置')
+        parser.add_argument('--test', action='store_true', help='微信发布测试模式')
+        parser.add_argument('--no-publish', action='store_true', help='禁用发布到微信，覆盖环境变量配置')
+        args = parser.parse_args()
+        
+        try:
+            # 获取项目地址列表
+            project_urls = []
+            if args.url:
+                project_urls = [args.url]
+            else:
+                urls_env = os.getenv('PROJECT_URLS', '')
+                project_urls = [url.strip() for url in urls_env.split(',') if url.strip()]
+            
+            if not project_urls:
+                raise ValueError("未配置项目地址。请在.env文件中设置PROJECT_URLS或使用--url参数")
+            
+            # 获取所有README内容
+            all_content = []
+            all_images = []
+            for url in project_urls:
+                try:
+                    content, img_links = fetch_readme_content(url)
+                    all_content.append(content)
+                    all_images.extend(img_links)
+                    print(f"成功获取 {url} 的README内容")
+                except Exception as e:
+                    print(f"获取 {url} 的README内容失败: {str(e)}")
+            
+            if not all_content:
+                raise ValueError("未能获取任何README内容")
+            
+            # 合并所有内容
+            combined_content = "\n\n---\n\n".join(all_content)
+            
+            # 使用OpenAI分析内容
+            analysis_result = analyze_with_openai(combined_content)
+            
+            # 提取文章内容
+            article_content = extract_article_content(analysis_result)
+            
+            # 生成HTML
+            html_content = generate_html(analysis_result)
+            
+            # 保存HTML文件
+            output_file = 'output.html'
+            with open(output_file, 'w', encoding='utf-8') as f:
+                f.write(html_content)
+                
+            print(f"\n分析完成！结果已保存到 {output_file}")
+            print("\n文章信息：")
+            print(f"标题：{article_content['title']}")
+            print(f"副标题：{article_content['sub_title']}")
+            print(f"正文预览：{article_content['body_text'][:100]}...")
+            
+            # 判断是否需要发布到微信
+            should_publish = False
+            if args.publish:
+                # 命令行参数优先：强制发布
+                should_publish = True
+            elif args.no_publish:
+                # 命令行参数优先：禁用发布
+                should_publish = False
+            else:
+                # 使用环境变量配置
+                should_publish = os.getenv('PUBLISH_TO_WEIXIN', 'false').lower() == 'true'
+            
+            if should_publish:
+                print("\n准备发布到微信...")
+                # 生成封面图
+                poster_url = generate_poster(article_content)
+                if poster_url:
+                    print(f"\n成功生成封面图：{poster_url}")
+                    
+                    print("\n=====================")
+                    print("开始调用微信发布模块...")
+                    
+                    # 直接调用publish_to_weixin模块
+                    try:
+                        # 创建WeixinPublisher实例
+                        weixin_publisher = WeixinPublisher()
+                        
+                        # 如果有海报，先上传海报
+                        thumb_media_id = None
+                        if poster_url:
+                            try:
+                                print("正在上传海报到微信...")
+                                thumb_media_id = weixin_publisher.upload_image(poster_url)
+                                print(f"海报上传成功，media_id: {thumb_media_id}")
+                            except Exception as e:
+                                print(f"上传海报失败: {str(e)}")
+                                if args.debug:
+                                    traceback.print_exc()
+                        
+                        print(f"准备上传微信: {poster_url}")
+                        # 准备参数
+                        publish_args = {
+                            'html': output_file,
+                            'title': article_content['title'],
+                            'author': os.getenv('AUTHOR_NAME', 'AI助手'),
+                            'test': args.test,
+                            'debug': args.debug
+                        }
+                        
+                        # 如果有封面图的media_id，添加到参数中
+                        if thumb_media_id:
+                            publish_args['thumb_media_id'] = thumb_media_id
+                        
+                        print(f"调用微信发布模块，参数: {publish_args}")
+                        
+                        # 调用publish_to_weixin模块中的publish函数
+                        result = publish_to_weixin.publish(**publish_args)
+                        
+                        if result:
+                            print("创建草稿成功！")
+                        else:
+                            print("创建草稿失败！")
+                            
+                    except Exception as e:
+                        print(f"调用微信发布模块失败: {str(e)}")
+                        if args.debug:
+                            traceback.print_exc()
+                else:
+                    print("\n生成封面图失败")
+            else:
+                print("\n已禁用发布到微信功能")
+            
+        except Exception as e:
+            print(f"发生错误: {str(e)}")
+            if args.debug:
+                traceback.print_exc()
+            return 1
+            
     except Exception as e:
         print(f"程序执行过程中发生未处理的异常:")
         traceback.print_exc()
-        sys.exit(1) 
+        sys.exit(1)
+    
+    return 0
+
+if __name__ == "__main__":
+    sys.exit(main()) 

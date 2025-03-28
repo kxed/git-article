@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+</head>
+<body style="font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', sans-serif; line-height: 1.6; color: #ccd6f6; background-color: #0a192f; max-width: 800px; margin: 0 auto; padding: 20px;">
+
+    <!-- 标题 -->
+    <div style="font-size: 2.2rem; font-weight: 700; color: #00d8ff; text-align: center; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid rgba(0, 216, 255, 0.3); text-shadow: 0 0 10px rgba(0, 216, 255, 0.3); position: relative;">
+        {{ title }}
+        <div style="position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 100px; height: 2px; background: linear-gradient(90deg, transparent, #00d8ff, transparent);"></div>
+    </div>
+    
+    <!-- 前言 -->
+    {% if sections.preface %}
+    <div style="margin-bottom: 40px; background-color: #172a45; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>前言
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;">{{ sections.preface | safe }}</div>
+    </div>
+    {% endif %}
+    
+    <!-- 项目介绍 -->
+    {% if sections.introduction %}
+    <div style="margin-bottom: 40px; background-color: #172a45; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>项目介绍
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;">{{ sections.introduction | safe }}</div>
+    </div>
+    {% endif %}
+    
+    <!-- 功能亮点 -->
+    {% if sections.features %}
+    <div style="margin-bottom: 40px; background-color: #172a45; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>功能亮点
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;">{{ sections.features | safe }}</div>
+    </div>
+    {% endif %}
+    
+    <!-- 技术特点 -->
+    {% if sections.technical %}
+    <div style="margin-bottom: 40px; background-color: #172a45; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>技术特点
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;">{{ sections.technical | safe }}</div>
+    </div>
+    {% endif %}
+    
+    <!-- 安装说明 -->
+    {% if sections.installation %}
+    <div style="margin-bottom: 40px; background-color: #172a45; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>安装说明
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;">{{ sections.installation | safe }}</div>
+    </div>
+    {% endif %}
+    
+    <!-- 使用说明 -->
+    {% if sections.usage %}
+    <div style="margin-bottom: 40px; background-color: #172a45; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>使用说明
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;">{{ sections.usage | safe }}</div>
+    </div>
+    {% endif %}
+    
+    <!-- 项目地址 -->
+    {% if sections.repository %}
+    <div style="margin-bottom: 40px; background-color: #172a45; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>项目地址
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;">{{ sections.repository | safe }}</div>
+    </div>
+    {% endif %}
+    
+    <!-- 结语 -->
+    {% if sections.conclusion %}
+    <div style="margin-top: 40px; padding: 25px; background: linear-gradient(135deg, rgba(0, 114, 255, 0.1), rgba(0, 216, 255, 0.1)); border-left: 4px solid #64ffda; border-radius: 8px; position: relative;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #00d8ff, transparent);"></div>
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>结语
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;">{{ sections.conclusion | safe }}</div>
+    </div>
+    {% endif %}
+
+</body>
+</html>

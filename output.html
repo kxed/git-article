@@ -1,186 +1,131 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>掌控MCP服务器：引领AI与资源的智能交互</title>
+    <title>技术练习与问题库：DevOps与SRE资源宝典</title>
 </head>
-<body style="margin: 0; padding: 15px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; line-height: 1.6; color: #333;">
-<!-- 引导关注 -->
-<div style="
-    margin: 0 auto 32px;
-    padding: 16px;
-    background: linear-gradient(135deg, #e6f3ff, #b3d9ff);
-    border-radius: 8px;
-    text-align: center;
-    ">
-    <div style="
-        font-size: 14px;
-        color: #3695f6;
-        font-weight: 500;
-        ">
-        点击<span style="font-weight: bold; text-decoration: underline;">蓝字</span>订阅我们，不迷路
-        </div>
+<body style="font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', sans-serif; line-height: 1.6; color: #ccd6f6; background-color: #0a192f; max-width: 800px; margin: 0 auto; padding: 20px;">
+
+    <!-- 标题 -->
+    <div style="font-size: 2.2rem; font-weight: 700; color: #00d8ff; text-align: center; margin-bottom: 30px; padding-bottom: 15px; border-bottom: 1px solid rgba(0, 216, 255, 0.3); text-shadow: 0 0 10px rgba(0, 216, 255, 0.3); position: relative;">
+        技术练习与问题库：DevOps与SRE资源宝典
+        <div style="position: absolute; bottom: -2px; left: 50%; transform: translateX(-50%); width: 100px; height: 2px; background: linear-gradient(90deg, transparent, #00d8ff, transparent);"></div>
     </div>
-<div class="content" style="max-width: 800px; margin: 0 auto;">
-    <div class="section" style="margin-bottom: 30px;"><div class="section-title" style="font-size: 20px; font-weight: bold; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0;">前言</div><div class="section-content" style="font-size: 16px; line-height: 1.8; color: #444; margin-bottom: 15px;"><br>随着人工智能（AI）技术的快速发展，AI模型与本地及远程资源的交互需求日益增加。Model Context Protocol（MCP）是一种创新的开放协议，旨在通过标准化的服务器实现，让AI模型能够与各种资源安全地进行互动。本文将详细介绍一份精心策划的MCP服务器列表，它涵盖了从生产环境到实验性用途的广泛实现，助力AI能力的全面拓展。<br></div></div><div class="section" style="margin-bottom: 30px;"><div class="section-title" style="font-size: 20px; font-weight: bold; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0;">项目介绍</div><div class="section-content" style="font-size: 16px; line-height: 1.8; color: #444; margin-bottom: 15px;"><br>MCP的背景源于AI应用领域对多样化、集成化服务的渴求。其目标是通过提供文件访问、数据库连接、API集成等多种情境化服务，解决AI模型在实际应用中的交互障碍。通过标准化的协议，MCP拓展了AI模型的应用场景，使其能够更加智能地进行资源管理和决策。<br></div></div><div class="section" style="margin-bottom: 30px;"><div class="section-title" style="font-size: 20px; font-weight: bold; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0;">功能亮点</div><div class="section-content" style="font-size: 16px; line-height: 1.8; color: #444; margin-bottom: 15px;"><ul class="feature-list" style="list-style-type: none; padding-left: 0;"><li style="margin-bottom: 10px; padding-left: 20px; position: relative;">**文件系统访问**：通过MCP服务器实现AI模型对本地及远程文件资源的访问和管理。</li><li style="margin-bottom: 10px; padding-left: 20px; position: relative;">**数据库连接**：支持与多种数据库的集成，方便AI模型进行数据检索和分析。</li><li style="margin-bottom: 10px; padding-left: 20px; position: relative;">**API集成**：提供与各类API的无缝连接，增强AI的实时信息获取及服务调用能力。</li><li style="margin-bottom: 10px; padding-left: 20px; position: relative;">**Web内容自动化**：利用浏览器自动化工具（如Playwright和Puppeteer），实现对网络内容的搜索、抓取和处理。</li></ul></div></div><div class="section" style="margin-bottom: 30px;"><div class="section-title" style="font-size: 20px; font-weight: bold; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0;">技术特点</div><div class="section-content" style="font-size: 16px; line-height: 1.8; color: #444; margin-bottom: 15px;"><ul class="feature-list" style="list-style-type: none; padding-left: 0;"><li style="margin-bottom: 10px; padding-left: 20px; position: relative;">**开放架构**：采用模块化设计，便于扩展和集成其他服务。</li><li style="margin-bottom: 10px; padding-left: 20px; position: relative;">**性能优势**：通过异步处理和并行计算，提高交互效率和响应速度。</li><li style="margin-bottom: 10px; padding-left: 20px; position: relative;">**安全性**：基于标准化协议，保证数据传输过程中的安全可靠。</li></ul></div></div><div class="section" style="margin-bottom: 30px;"><div class="section-title" style="font-size: 20px; font-weight: bold; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0;">安装说明</div><div class="section-content" style="font-size: 16px; line-height: 1.8; color: #444; margin-bottom: 15px;">为便于用户快速上手，以下是MCP服务器的安装步骤及环境要求：<br>- <strong>环境要求</strong>：<br>  - Python 3.7及以上<br>  - Node.js 12及以上（若使用JavaScript/TypeScript实现）<br>  - Go 1.13及以上（若使用Go语言实现）<br>  - 确保网络环境正常<br>- <strong>安装步骤</strong>：<br>  安装Python版MCP服务器示例：</div><div class="code-block" style="background-color: #f8f8f8; padding: 15px; border-radius: 5px; margin: 15px 0; overflow-x: auto;"><pre class="code" style="font-family: Consolas, Monaco, 'Andale Mono', monospace; font-size: 14px; line-height: 1.4; color: #333; margin: 0;">  git clone https://github.com/blackwhite084/playwright-plus-python-mcp.git
-  cd playwright-plus-python-mcp
-  pip install -r requirements.txt</pre></div></div><div class="section" style="margin-bottom: 30px;"><div class="section-title" style="font-size: 20px; font-weight: bold; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0;">使用说明</div><div class="section-content" style="font-size: 16px; line-height: 1.8; color: #444; margin-bottom: 15px;">通过配置文件或命令行参数，可以灵活定制MCP服务器的行为：<br>- <strong>配置说明</strong>：<br>  编辑配置文件`config.json`以设定API密钥、数据库连接信息等关键参数。<br>- <strong>启动服务</strong>：<br>  启动MCP服务器：</div><div class="code-block" style="background-color: #f8f8f8; padding: 15px; border-radius: 5px; margin: 15px 0; overflow-x: auto;"><pre class="code" style="font-family: Consolas, Monaco, 'Andale Mono', monospace; font-size: 14px; line-height: 1.4; color: #333; margin: 0;">  python main.py --config config.json</pre></div></div><div class="section" style="margin-bottom: 30px;"><div class="section-title" style="font-size: 20px; font-weight: bold; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0;">项目地址</div><div class="section-content" style="font-size: 16px; line-height: 1.8; color: #444; margin-bottom: 15px;"><a href="欲获取项目的更多信息及源码，请访问：" target="_blank" class="project-link" style="color: #0366d6; text-decoration: none; word-break: break-all;">欲获取项目的更多信息及源码，请访问：</a><br><a href="- GitHub: https://github.com/blackwhite084/playwright-plus-python-mcp" target="_blank" class="project-link" style="color: #0366d6; text-decoration: none; word-break: break-all;">- GitHub: https://github.com/blackwhite084/playwright-plus-python-mcp</a><br></div></div><div class="section" style="margin-bottom: 30px;"><div class="section-title" style="font-size: 20px; font-weight: bold; color: #333; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #f0f0f0;">结语</div><div class="section-content" style="font-size: 16px; line-height: 1.8; color: #444; margin-bottom: 15px;"><br>通过MCP服务器，AI模型与资源的互动变得前所未有的便捷和灵活。其开放性的设计、丰富的功能和出色的性能奠定了其在AI集成应用中的重要位置。随着社区的不断壮大和技术的日趋成熟，MCP有望成为AI资源交互领域的重要标准，为未来的智能系统开发铺平道路。</div></div>
+    
+    <!-- 前言 -->
+    
+    <div style="margin-bottom: 40px; background-color: #172a45; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>前言
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;">
+本开源项目致力于提供覆盖<strong>DevOps</strong>和<strong>SRE</strong>领域的丰富学习资源，包含各类技术主题的问题和练习。这是一个为开发者和IT专业人员设计的综合库，旨在帮助他们提升技能并为面试做好准备。
 </div>
+    </div>
+    
+    
+    <!-- 项目介绍 -->
+    
+    <div style="margin-bottom: 40px; background-color: #172a45; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>项目介绍
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;"><ul>
+<li>提供全面的技术练习题库，涵盖DevOps、SRE以及相关领域。</li>
+<li>为准备技术面试的人员提供练习素材。</li>
+<li>促进学习者对相关技术领域的深入理解。</li>
+<li>缺乏系统化的练习资源来支持技术技能的提升。</li>
+<li>面试准备的资源不集中，信息易分散。</li>
+<li>从业者对行业技术发展的跟进不足。</li>
+</ul></div>
+    </div>
+    
+    
+    <!-- 功能亮点 -->
+    
+    <div style="margin-bottom: 40px; background-color: #172a45; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>功能亮点
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;"><ul>
+<li><strong>丰富的问题集合</strong>：包含2624个技术问题和练习。</li>
+<li><strong>广泛的主题覆盖</strong>：从DevOps到SRE，涉及多个关键技术领域。</li>
+<li><strong>开源社区贡献</strong>：开放给社区，支持用户提交新的问题和练习。</li>
+</ul></div>
+    </div>
+    
+    
+    <!-- 技术特点 -->
+    
+    <div style="margin-bottom: 40px; background-color: #172a45; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>技术特点
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;"><ul>
+<li>通过Markdown直观呈现，界面简单明了。</li>
+<li>跨平台兼容，可在不同操作系统上无缝访问。</li>
+</ul></div>
+    </div>
+    
+    
+    <!-- 安装说明 -->
+    
+    <div style="margin-bottom: 40px; background-color: #172a45; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>安装说明
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;">
+项目本身为一个资源库，无需安装任何软件即可使用。用户只需确保能够访问GitHub并浏览Markdown文件即可。
 
-<style>
-/* 在微信中，以下样式会被转换为内联样式 */
-.section {
-    margin-bottom: 30px;
-}
-.section-title {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 15px;
-    padding-bottom: 10px;
-    border-bottom: 2px solid #f0f0f0;
-}
-.section-content {
-    font-size: 16px;
-    line-height: 1.8;
-    color: #444;
-    margin-bottom: 15px;
-}
-.feature-list {
-    list-style-type: none;
-    padding-left: 0;
-}
-.feature-list li {
-    margin-bottom: 10px;
-    padding-left: 20px;
-    position: relative;
-}
-.feature-list li:before {
-    content: "•";
-    position: absolute;
-    left: 0;
-    color: #666;
-}
-.code-block {
-    background-color: #f8f8f8;
-    padding: 15px;
-    border-radius: 5px;
-    margin: 15px 0;
-    overflow-x: auto;
-}
-.code {
-    font-family: Consolas, Monaco, 'Andale Mono', monospace;
-    font-size: 14px;
-    line-height: 1.4;
-    color: #333;
-    margin: 0;
-}
-.image-container {
-    margin: 20px 0;
-    text-align: center;
-}
-.content-image {
-    max-width: 100%;
-    height: auto;
-    margin-bottom: 10px;
-}
-.image-caption {
-    font-size: 14px;
-    color: #666;
-    text-align: center;
-}
-.project-link {
-    color: #0366d6;
-    text-decoration: none;
-    word-break: break-all;
-}
-</style>
+### 环境要求
 
-<script>
-// 将样式转换为内联样式
-document.addEventListener('DOMContentLoaded', function() {
-    const sections = document.querySelectorAll('.section');
-    sections.forEach(section => {
-        section.style.marginBottom = '30px';
-        
-        const title = section.querySelector('.section-title');
-        if (title) {
-            title.style.fontSize = '20px';
-            title.style.fontWeight = 'bold';
-            title.style.color = '#333';
-            title.style.marginBottom = '15px';
-            title.style.paddingBottom = '10px';
-            title.style.borderBottom = '2px solid #f0f0f0';
-        }
-        
-        const content = section.querySelector('.section-content');
-        if (content) {
-            content.style.fontSize = '16px';
-            content.style.lineHeight = '1.8';
-            content.style.color = '#444';
-            content.style.marginBottom = '15px';
-        }
-    });
+无特定软件或版本要求，建议使用最新的浏览器进行访问以获得最佳体验。
+</div>
+    </div>
     
-    const lists = document.querySelectorAll('.feature-list');
-    lists.forEach(list => {
-        list.style.listStyleType = 'none';
-        list.style.paddingLeft = '0';
-        
-        const items = list.querySelectorAll('li');
-        items.forEach(item => {
-            item.style.marginBottom = '10px';
-            item.style.paddingLeft = '20px';
-            item.style.position = 'relative';
-        });
-    });
     
-    const codeBlocks = document.querySelectorAll('.code-block');
-    codeBlocks.forEach(block => {
-        block.style.backgroundColor = '#f8f8f8';
-        block.style.padding = '15px';
-        block.style.borderRadius = '5px';
-        block.style.margin = '15px 0';
-        block.style.overflowX = 'auto';
-        
-        const code = block.querySelector('.code');
-        if (code) {
-            code.style.fontFamily = 'Consolas, Monaco, "Andale Mono", monospace';
-            code.style.fontSize = '14px';
-            code.style.lineHeight = '1.4';
-            code.style.color = '#333';
-            code.style.margin = '0';
-        }
-    });
+    <!-- 使用说明 -->
     
-    const imageContainers = document.querySelectorAll('.image-container');
-    imageContainers.forEach(container => {
-        container.style.margin = '20px 0';
-        container.style.textAlign = 'center';
-        
-        const image = container.querySelector('.content-image');
-        if (image) {
-            image.style.maxWidth = '100%';
-            image.style.height = 'auto';
-            image.style.marginBottom = '10px';
-        }
-        
-        const caption = container.querySelector('.image-caption');
-        if (caption) {
-            caption.style.fontSize = '14px';
-            caption.style.color = '#666';
-            caption.style.textAlign = 'center';
-        }
-    });
+    <div style="margin-bottom: 40px; background-color: #172a45; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>使用说明
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;"><ul>
+<li>前往GitHub项目页面浏览现有的问题和练习。</li>
+<li>根据所需主题访问对应的Markdown文件。例如：</li>
+<li>DevOps：<a href="topics/devops/README.md" target="_blank">链接</a></li>
+<li>Git：<a href="topics/git/README.md" target="_blank">链接</a></li>
+<li>网络：<a href="#network" target="_blank">链接</a></li>
+<li>按照文件中的练习问题进行自我测试。</li>
+<li>有兴趣的用户可通过提交<strong>pull requests</strong>贡献新练习，具体步骤详见<a href="CONTRIBUTING.md" target="_blank">贡献指南</a>。</li>
+</ul></div>
+    </div>
     
-    const links = document.querySelectorAll('.project-link');
-    links.forEach(link => {
-        link.style.color = '#0366d6';
-        link.style.textDecoration = 'none';
-        link.style.wordBreak = 'break-all';
-    });
-});
-</script>
+    
+    <!-- 项目地址 -->
+    
+    <div style="margin-bottom: 40px; background-color: #172a45; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transition: all 0.3s ease;">
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>项目地址
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;">
+项目源码及资源访问：<a href="https://github.com/bregman-arie/devops-exercises" target="_blank">https://github.com/bregman-arie/devops-exercises</a>
+</div>
+    </div>
+    
+    
+    <!-- 结语 -->
+    
+    <div style="margin-top: 40px; padding: 25px; background: linear-gradient(135deg, rgba(0, 114, 255, 0.1), rgba(0, 216, 255, 0.1)); border-left: 4px solid #64ffda; border-radius: 8px; position: relative;">
+        <div style="position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #00d8ff, transparent);"></div>
+        <div style="font-size: 1.5rem; line-height: 1.4; padding-left: 15px; margin: 0 0 15px 0; font-weight: 600; border-left: 4px solid #64ffda; color: #00d8ff; position: relative;">
+            <span style="color: #64ffda;">// </span>结语
+        </div>
+        <div style="font-size: 1rem; line-height: 1.8; color: #ccd6f6;">
+本项目通过提供广泛而深入的问题和练习，支持技术从业者提升技能。随着技术的发展，期望更多社区贡献者加入，持续丰富和更新内容，为用户创造更多价值。</div>
+    </div>
+    
+
 </body>
-</html> 
+</html>
